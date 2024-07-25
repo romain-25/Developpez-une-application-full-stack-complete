@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
   start() {
     this.userservice.profil().subscribe(res => {
       console.log(res)
