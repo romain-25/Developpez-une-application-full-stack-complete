@@ -1,5 +1,6 @@
 package com.openclassrooms.microserviceuser.service;
 
+import com.openclassrooms.microserviceuser.dto.TokenDto;
 import com.openclassrooms.microserviceuser.dto.UserLoginDto;
 import com.openclassrooms.microserviceuser.dto.UserRegisterDto;
 import com.openclassrooms.microserviceuser.model.UserModel;
@@ -35,17 +36,7 @@ public class UserService {
     public UserModel getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    /**
-     * Creates a new user.
-     *
-     * @param userDto the DTO containing the user details
-     * @return the created user model
-     */
-    public UserModel registerUser(UserRegisterDto userDto) {
-        UserModel user = modelMapper.map(userDto, UserModel.class);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        return userRepository.save(user);
-    }
+
     /**
      * Checks if the provided password matches the stored password for the user.
      *
@@ -64,7 +55,8 @@ public class UserService {
             if(bcheckPassword) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(foundUser.getEmail(), null, new ArrayList<>());
                 String token = jwtService.generateToken(authentication);
-                return ResponseEntity.ok(token);
+                TokenDto tokenDto = new TokenDto(token);
+                return ResponseEntity.ok(tokenDto);
             }else{
                 // Mot de pass incorrect
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou mot de passe incorrect");
@@ -72,6 +64,36 @@ public class UserService {
         }else {
             // Email incorrect
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou mot de passe incorrect");
+        }
+    }
+
+    /**
+     * Creates a new user.
+     *
+     * @param userRegister the DTO containing the user details
+     * @return the created user model
+     */
+    public UserModel createAndSaveUser(UserRegisterDto userRegister) {
+        UserModel user = modelMapper.map(userRegister, UserModel.class);
+        user.setPassword(passwordEncoder.encode(userRegister.getPassword()));
+        return userRepository.save(user);
+    }
+    /**
+     * Creates a new user.
+     *
+     * @param userRegister the DTO containing the user details
+     * @return the created user model
+     */
+    public ResponseEntity<?> registerUser(UserRegisterDto userRegister) {
+        UserModel foundUser = userRepository.findByEmail(userRegister.getEmail());
+        if(foundUser == null) {
+            UserModel newUser = createAndSaveUser(userRegister);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(newUser.getEmail(), null, new ArrayList<>());
+            String token = jwtService.generateToken(authentication);
+            TokenDto tokenDto = new TokenDto(token);
+            return ResponseEntity.ok(tokenDto);
+        }else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Un utilisateur avec cet email existe déjà");
         }
     }
 }
