@@ -4,6 +4,7 @@ import com.openclassrooms.microserviceuser.dto.UserLoginDto;
 import com.openclassrooms.microserviceuser.model.UserModel;
 import com.openclassrooms.microserviceuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/auth/login")
-    public UserLoginDto login(@RequestBody UserLoginDto user) {
-//       UserModel foundAccount =
+    public ResponseEntity<?> login(@RequestBody UserLoginDto userLogin) {
+       return userService.checkLogin(userLogin);
     }
 
-    @GetMapping("/profil")
+    @GetMapping("/auth/profil")
     public UserModel profil(){
-        return userService.findByEmail("romain@test.fr");
+        return userService.getUserByEmail("romain@test.fr");
     }
 }
