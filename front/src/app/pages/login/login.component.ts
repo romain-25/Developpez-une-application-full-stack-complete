@@ -5,6 +5,7 @@ import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserLoginModel} from "../../models/UserLoginModel";
 import {TokenModel} from "../../models/TokenModel";
+import {BackComponent} from "../../components/back/back.component";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import {TokenModel} from "../../models/TokenModel";
   imports: [
     MatButton,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BackComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -20,9 +22,8 @@ import {TokenModel} from "../../models/TokenModel";
 export class LoginComponent {
   fb:FormBuilder = inject(FormBuilder);
   userService:UserService = inject(UserService);
-
-  public form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+  public form: FormGroup = this.fb.group({
+    email: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.min(3)]]
   });
 
