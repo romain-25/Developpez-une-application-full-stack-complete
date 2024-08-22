@@ -35,7 +35,7 @@ export class LoginComponent {
     const userLogin: UserLoginModel = this.form.value as UserLoginModel;
     this.userService.login(userLogin).subscribe((result:TokenModel): void =>{
       console.log(result)
-      this.sessionService.logIn(result.token, userLogin.email)
+      this.sessionService.logIn(result)
       // TODO do catch
     }, error => console.log(error));
   }

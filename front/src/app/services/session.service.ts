@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {TokenModel} from "../models/TokenModel";
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +18,19 @@ export class SessionService {
     return this.isLoggedSubject.asObservable();
   }
 
-  public logIn(token: string, email: string): void {
+  public logIn(token: TokenModel): void {
     // this.user = user;
     if(token){
-      localStorage.setItem('token', token);
-      localStorage.setItem('email', email);
+      localStorage.setItem('tokenModel', JSON.stringify(token));
       this.isLogged = true;
       //this.router.navigate(['/articles'])
-      this.router.navigate(['/profile'])
+      this.router.navigate(['/articles'])
       this.next();
     }
   }
 
   public logOut(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('email');
     // this.user = undefined;
     this.isLogged = false;
     this.router.navigate(['/login'])

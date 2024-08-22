@@ -38,8 +38,7 @@ export class RegisterComponent {
 
     const userRegister: UserRegisterModel = this.form.value as UserRegisterModel;
     this.userService.register(userRegister).subscribe( result =>{
-      console.log(result);
-      this.sessionService.logIn(result.token, userRegister.email)
+      this.sessionService.logIn(result)
       // TODO do catch
     }, error => console.log(error));
   }

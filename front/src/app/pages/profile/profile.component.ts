@@ -6,6 +6,7 @@ import {SessionService} from "../../services/session.service";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../models/UserModel";
 import {MessageModel} from "../../models/MessageModel";
+import {TokenModel} from "../../models/TokenModel";
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,12 @@ export class ProfileComponent {
     email: ['', [Validators.required, Validators.email]],
   });
   ngOnInit(): void{
-    this.email = localStorage.getItem('email')
+    let tokenJson: string | null = localStorage.getItem('token')
+    let tokenModel: TokenModel = {} as TokenModel;
+    if(tokenJson){
+      tokenModel = JSON.parse(tokenJson);
+    }
+    this.email = tokenModel.email
     if(this.email != null){
       this.userService.profil(this.email).subscribe( (result: UserModel): void=>{
         console.log(result)

@@ -13,20 +13,18 @@ export class UserService {
   private http: HttpClient = inject(HttpClient);
 
   login(userLogin:UserLoginModel):Observable<any>{
-    return this.http.post<UserLoginModel>(environment.microservice_user + 'auth/login',userLogin);
+    return this.http.post<UserLoginModel>(environment.microservice_user + 'login',userLogin);
   }
 
   register(userRegister:UserRegisterModel):Observable<any>{
-    return this.http.post<UserRegisterModel>(environment.microservice_user + 'auth/register',userRegister);
+    return this.http.post<UserRegisterModel>(environment.microservice_user + 'register',userRegister);
   }
 
   profil(email: string):Observable<any>{
       let userEmail: UserEmailModel = {username: "",email: email}
-      // return this.http.get<UserModel>(environment.microservice_user + '/profil');
-      console.log(environment.microservice_user + 'profil');
-      return this.http.post(environment.microservice_user + 'auth/profil', userEmail);
+      return this.http.post(environment.microservice_user + 'profil', userEmail);
   }
   editProfil(email:UserEmailModel):Observable<any>{
-    return this.http.put<UserEmailModel>(environment.microservice_user + 'auth/profil', email);
+    return this.http.put<UserEmailModel>(environment.microservice_user + 'profil', email);
   }
 }

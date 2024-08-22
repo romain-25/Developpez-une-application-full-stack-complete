@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  microservice_user: "http://localhost:3001/"
+  microservice_user: "http://localhost:3001/auth/",
+  microservice_article: "http://localhost:3003/article/"
 };
 
 /*

@@ -1,12 +1,18 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import {TokenModel} from "../models/TokenModel";
 
 @Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor {
   constructor() {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    const token = localStorage.getItem('token');
+    let tokenJson: string | null = localStorage.getItem('token')
+    let tokenModel: TokenModel = {} as TokenModel;
+    if(tokenJson){
+      tokenModel = JSON.parse(tokenJson);
+    }
+    const token = tokenModel.token;
     if (token) {
       request = request.clone({
         setHeaders: {
