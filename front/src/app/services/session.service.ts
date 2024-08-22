@@ -30,7 +30,7 @@ export class SessionService {
   }
 
   public logOut(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('tokenModel');
     // this.user = undefined;
     this.isLogged = false;
     this.router.navigate(['/login'])

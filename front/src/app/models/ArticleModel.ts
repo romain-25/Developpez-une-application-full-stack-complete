@@ -3,7 +3,8 @@ export interface ArticleModel {
   title: string;
   content: string;
   publishedDate: Date;
-  authorID: number;
+  // authorID: number;
   authorUsername: string;
   themeID: number;
+  themeTitle: number;
 }

@@ -7,7 +7,7 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor() {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    let tokenJson: string | null = localStorage.getItem('token')
+    let tokenJson: string | null = localStorage.getItem('tokenModel')
     let tokenModel: TokenModel = {} as TokenModel;
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);

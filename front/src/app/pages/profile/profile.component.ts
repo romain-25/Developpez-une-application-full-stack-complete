@@ -30,7 +30,7 @@ export class ProfileComponent {
     email: ['', [Validators.required, Validators.email]],
   });
   ngOnInit(): void{
-    let tokenJson: string | null = localStorage.getItem('token')
+    let tokenJson: string | null = localStorage.getItem('tokenModel')
     let tokenModel: TokenModel = {} as TokenModel;
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);

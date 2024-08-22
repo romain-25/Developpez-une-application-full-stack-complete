@@ -15,12 +15,6 @@ export class ArticleService {
     return this.http.get<ArticleModel[]>(environment.microservice_article + "all")
   }
   createArticle(article:ArticleModel):Observable<any>{
-    let tokenJson: string | null = localStorage.getItem('token')
-    let tokenModel: TokenModel = {} as TokenModel;
-    if(tokenJson){
-      tokenModel = JSON.parse(tokenJson);
-    }
-    article.authorUsername = tokenModel.username;
     return this.http.post<ArticleModel>(environment.microservice_article + 'create',article);
   }
   getSingleArticle(id:number):Observable<any>{
