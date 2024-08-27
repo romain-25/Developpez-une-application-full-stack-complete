@@ -9,15 +9,16 @@ import {TokenModel} from "../models/TokenModel";
   providedIn: 'root'
 })
 export class ArticleService {
+  prefix: string = "/article/";
   private http: HttpClient = inject(HttpClient);
 
   getAllArticles():Observable<any>{
-    return this.http.get<ArticleModel[]>(environment.microservice_article + "all")
+    return this.http.get<ArticleModel[]>(environment.developpement + this.prefix + "all")
   }
   createArticle(article:ArticleModel):Observable<any>{
-    return this.http.post<ArticleModel>(environment.microservice_article + 'create',article);
+    return this.http.post<ArticleModel>(environment.developpement + this.prefix + 'create',article);
   }
   getSingleArticle(id:number):Observable<any>{
-    return this.http.get<ArticleModel>(environment.microservice_article + 'single/' + id);
+    return this.http.get<ArticleModel>(environment.developpement + this.prefix + 'single/' + id);
   }
 }

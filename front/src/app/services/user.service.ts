@@ -11,20 +11,21 @@ import {UserEmailModel} from "../models/UserEmailModel";
 })
 export class UserService {
   private http: HttpClient = inject(HttpClient);
+  prefix: string = "/auth/";
 
   login(userLogin:UserLoginModel):Observable<any>{
-    return this.http.post<UserLoginModel>(environment.microservice_user + 'login',userLogin);
+    return this.http.post<UserLoginModel>(environment.developpement + this.prefix +'login',userLogin);
   }
 
   register(userRegister:UserRegisterModel):Observable<any>{
-    return this.http.post<UserRegisterModel>(environment.microservice_user + 'register',userRegister);
+    return this.http.post<UserRegisterModel>(environment.developpement + this.prefix + 'register',userRegister);
   }
 
   profil(email: string):Observable<any>{
       let userEmail: UserEmailModel = {username: "",email: email}
-      return this.http.post(environment.microservice_user + 'profil', userEmail);
+      return this.http.post(environment.developpement + this.prefix +'profil', userEmail);
   }
   editProfil(email:UserEmailModel):Observable<any>{
-    return this.http.put<UserEmailModel>(environment.microservice_user + 'profil', email);
+    return this.http.put<UserEmailModel>(environment.developpement + this.prefix + 'profil', email);
   }
 }
