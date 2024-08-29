@@ -23,7 +23,6 @@ export class SessionService {
     if(token){
       localStorage.setItem('tokenModel', JSON.stringify(token));
       this.isLogged = true;
-      //this.router.navigate(['/articles'])
       this.router.navigate(['/articles'])
       this.next();
     }

@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ArticleModel} from "../models/ArticleModel";
 import {environment} from "../../environments/environment";
-import {TokenModel} from "../models/TokenModel";
+import {ThemeModelDto} from "../models/ThemeModelDto";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,18 @@ export class ArticleService {
   }
   getSingleArticle(id:number):Observable<any>{
     return this.http.get<ArticleModel>(environment.developpement + this.prefix + 'single/' + id);
+  }
+  getThemes(): Observable<any>{
+    return this.http.get<ThemeModelDto[]>(environment.developpement + this.prefix + 'theme/all')
+  }
+  subscribeTheme(subscribe: boolean, userId: number, themeId: number):Observable<any>{
+    let subscribeURL: string = (subscribe) ? "unsubscribe" : "subscribe";
+    return this.http.post(`${environment.developpement + this.prefix + subscribeURL}/${userId}/${themeId}`,{});
+  }
+  subscribeToTheme(userId: number, themeId: number): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix }subscribe/${userId}/${themeId}`, {});
+  }
+  unsubscribeFromTheme(userId: number, themeId: number): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix }unsubscribe/${userId}/${themeId}`, {});
   }
 }

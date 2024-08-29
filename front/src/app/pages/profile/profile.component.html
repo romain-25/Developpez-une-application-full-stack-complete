@@ -25,5 +25,12 @@
   </div>
   <hr/>
 </div>
-<!--TODO add subscription-->
+<div class="w-90">
+  <div class="container">
+    @for(theme of user.themes; track theme.id){
+      <app-card-theme (themeChanged)="onThemeChanged()" [subscribe]="true" [theme]="theme" [themeUser]="user.themes"></app-card-theme>
+    }
+  </div>
+</div>
+
 

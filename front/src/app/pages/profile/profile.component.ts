@@ -7,15 +7,18 @@ import {UserService} from "../../services/user.service";
 import {UserModel} from "../../models/UserModel";
 import {MessageModel} from "../../models/MessageModel";
 import {TokenModel} from "../../models/TokenModel";
+import {CardThemeComponent} from "../themes/card-theme/card-theme.component";
+import {ThemeModelDto} from "../../models/ThemeModelDto";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-    imports: [
-        BackComponent,
-        MatButton,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BackComponent,
+    MatButton,
+    ReactiveFormsModule,
+    CardThemeComponent
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -50,6 +53,11 @@ export class ProfileComponent {
         }
       })
     }
+  }
+  onThemeChanged(){
+    this.userService.getUserThemes().subscribe((result: ThemeModelDto[]) =>{
+      this.user.themes = result
+    })
   }
   save(): void{
     this.userService.editProfil(this.form.value).subscribe( (result:MessageModel): void=>{
