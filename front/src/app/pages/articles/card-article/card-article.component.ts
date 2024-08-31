@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, Input} from '@angular/core';
 import {ArticleModel} from "../../../models/ArticleModel";
 import {DatePipe} from "@angular/common";
 import {MatCard} from "@angular/material/card";
@@ -15,6 +15,7 @@ import {MatCard} from "@angular/material/card";
 })
 export class CardArticleComponent {
   @Input() article!: ArticleModel;
+  cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   constructor() {
     console.log("article", this.article);
   }

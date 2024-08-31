@@ -26,4 +26,7 @@ export class ArticlesComponent {
       console.log("articles", this.articles)
     }))
   }
+  trackByArticleId(index: number, article:ArticleModel): number {
+    return article.id;
+  }
 }

@@ -5,7 +5,7 @@
   </div>
 
   <div class="container">
-    @for(article of articles; track article.id){
+    @for(article of articles; track trackByArticleId){
       @if(article){
         <app-card-article class="item" routerLink="/single-article/{{article.id}}" [article]="article"> </app-card-article>
       }
