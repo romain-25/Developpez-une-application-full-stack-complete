@@ -15,4 +15,7 @@ import {MatCard} from "@angular/material/card";
 })
 export class CardArticleComponent {
   @Input() article!: ArticleModel;
+  constructor() {
+    console.log("article", this.article);
+  }
 }

@@ -4,13 +4,15 @@ import {MatCard} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {ArticleService} from "../../../services/article.service";
 import {TokenModel} from "../../../models/TokenModel";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-card-theme',
   standalone: true,
   imports: [
     MatCard,
-    MatButton
+    MatButton,
+    NgIf
   ],
   templateUrl: './card-theme.component.html',
   styleUrl: './card-theme.component.scss'
@@ -18,28 +20,18 @@ import {TokenModel} from "../../../models/TokenModel";
 export class CardThemeComponent {
   articleService: ArticleService = inject(ArticleService);
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
-  @Input() subscribe!: boolean;
   @Input() theme!: ThemeModelDto;
   @Input() themeUser!: ThemeModelDto[];
-  @Output() themeChanged: EventEmitter<void> = new EventEmitter<void>();
+  @Input() profile!: boolean;
+  @Output() change:EventEmitter<void> = new EventEmitter();
 
   subscribeString!: string;
   ngOnInit(): void {
-    this.updateSubscribeString();
-    this.checkTheme(this.theme.id);
-  }
-  checkTheme(themeId: number): boolean {
-    if(this.themeUser.find((t) => t.id === themeId)) {
-      return true;
-    }else{
-      return false;
-    }
+      this.updateSubscribeString();
   }
 
   updateSubscribeString(): void {
-    this.subscribeString = this.subscribe ? 'Se désinscrire' : 'S\'inscrire';
-    this.cd.detectChanges();
-    this.themeChanged.emit();
+      this.subscribeString = this.theme.subscribed ? 'Se désinscrire' : 'S\'inscrire';
   }
 
   subscribeTheme(): void {
@@ -48,18 +40,25 @@ export class CardThemeComponent {
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);
     }
-    if (this.subscribe) {
+    if (this.theme.subscribed) {
       this.articleService.unsubscribeFromTheme(tokenModel.id, this.theme.id).subscribe(
-        () => {
-          this.subscribe = false;
+        (data: ThemeModelDto) => {
+          if(data.id == this.theme.id){
+            this.theme = data;
+          }
+          if(this.profile){
+            this.change.emit();
+          }
           this.updateSubscribeString();
         },
         error => console.error('Erreur lors de la désinscription', error)
       );
     } else {
       this.articleService.subscribeToTheme(tokenModel.id, this.theme.id).subscribe(
-        () => {
-          this.subscribe = true;
+          (data: ThemeModelDto) => {
+            if(data.id == this.theme.id){
+              this.theme = data;
+            }
           this.updateSubscribeString();
         },
         error => console.error('Erreur lors de l\'inscription', error)

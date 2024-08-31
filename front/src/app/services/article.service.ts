@@ -22,7 +22,7 @@ export class ArticleService {
     return this.http.get<ArticleModel>(environment.developpement + this.prefix + 'single/' + id);
   }
   getThemes(): Observable<any>{
-    return this.http.get<ThemeModelDto[]>(environment.developpement + this.prefix + 'theme/all')
+    return this.http.get<ThemeModelDto[]>(environment.developpement + this.prefix + 'theme/all/1')
   }
   subscribeTheme(subscribe: boolean, userId: number, themeId: number):Observable<any>{
     let subscribeURL: string = (subscribe) ? "unsubscribe" : "subscribe";

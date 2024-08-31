@@ -38,21 +38,25 @@ export class ProfileComponent {
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);
     }
+    // TODO change email with recovery token in backend
     this.email = tokenModel.email
     if(this.email != null){
-      this.userService.profil(this.email).subscribe( (result: UserModel): void=>{
-        console.log(result)
-        if(result){
-          this.user = result;
-          this.form.setValue(
-            {
-              username: result.username,
-              email: result.email,
-            }
-          )
-        }
-      })
+        this.getProfile(this.email);
     }
+  }
+  getProfile(email: string){
+    this.userService.profil(email).subscribe( (result: UserModel): void=>{
+      console.log(result)
+      if(result){
+        this.user = result;
+        this.form.setValue(
+          {
+            username: result.username,
+            email: result.email,
+          }
+        )
+      }
+    })
   }
   onThemeChanged(){
     this.userService.getUserThemes().subscribe((result: ThemeModelDto[]) =>{

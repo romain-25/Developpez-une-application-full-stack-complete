@@ -23,7 +23,7 @@ export class ArticlesComponent {
   ngOnInit(){
     this.articleService.getAllArticles().subscribe(((result: ArticleModel[]) =>{
       this.articles = result;
-      console.log(this.articles)
+      console.log("articles", this.articles)
     }))
   }
 }
