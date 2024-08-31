@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {ArticleModel} from "../models/ArticleModel";
 import {environment} from "../../environments/environment";
 import {ThemeModelDto} from "../models/ThemeModelDto";
+import {CommentDto} from "../models/CommentDto";
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,8 @@ export class ArticleService {
   }
   unsubscribeFromTheme(userId: number, themeId: number): Observable<any> {
     return this.http.post(`${environment.developpement + this.prefix }unsubscribe/${userId}/${themeId}`, {});
+  }
+  addComment(articleId: number, userId: number, comment: CommentDto): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix + articleId + "/"}comment/${userId}`, comment);
   }
 }

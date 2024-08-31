@@ -1,5 +1,6 @@
 import {AuthorModel} from "./AuthorModel";
 import {ThemeModelDto} from "./ThemeModelDto";
+import {CommentModel} from "./CommentModel";
 
 export interface ArticleModel {
   id: number;
@@ -8,4 +9,5 @@ export interface ArticleModel {
   publishedDate: Date;
   author: AuthorModel;
   theme: ThemeModelDto;
+  comments: CommentModel[];
 }
