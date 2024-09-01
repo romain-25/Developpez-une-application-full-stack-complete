@@ -32,14 +32,13 @@ export class RegisterComponent {
 
   register(): void{
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // This will mark all controls as touched to show validation errors
+      this.form.markAllAsTouched();
       return;
     }
 
     const userRegister: UserRegisterModel = this.form.value as UserRegisterModel;
     this.userService.register(userRegister).subscribe( result =>{
       this.sessionService.logIn(result)
-      // TODO do catch
     }, error => console.log(error));
   }
 }

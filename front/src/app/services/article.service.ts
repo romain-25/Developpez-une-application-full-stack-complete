@@ -23,19 +23,19 @@ export class ArticleService {
     return this.http.get<ArticleModel>(environment.developpement + this.prefix + 'single/' + id);
   }
   getThemes(): Observable<any>{
-    return this.http.get<ThemeModelDto[]>(environment.developpement + this.prefix + 'theme/all/1')
+    return this.http.get<ThemeModelDto[]>(environment.developpement + this.prefix + 'theme/all')
   }
   subscribeTheme(subscribe: boolean, userId: number, themeId: number):Observable<any>{
     let subscribeURL: string = (subscribe) ? "unsubscribe" : "subscribe";
     return this.http.post(`${environment.developpement + this.prefix + subscribeURL}/${userId}/${themeId}`,{});
   }
-  subscribeToTheme(userId: number, themeId: number): Observable<any> {
-    return this.http.post(`${environment.developpement + this.prefix }subscribe/${userId}/${themeId}`, {});
+  subscribeToTheme(themeId: number): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix }subscribe/${themeId}`, {});
   }
-  unsubscribeFromTheme(userId: number, themeId: number): Observable<any> {
-    return this.http.post(`${environment.developpement + this.prefix }unsubscribe/${userId}/${themeId}`, {});
+  unsubscribeFromTheme(themeId: number): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix }unsubscribe/${themeId}`, {});
   }
-  addComment(articleId: number, userId: number, comment: CommentDto): Observable<any> {
-    return this.http.post(`${environment.developpement + this.prefix + articleId + "/"}comment/${userId}`, comment);
+  addComment(articleId: number, comment: CommentDto): Observable<any> {
+    return this.http.post(`${environment.developpement + this.prefix + articleId + "/"}comment`, comment);
   }
 }

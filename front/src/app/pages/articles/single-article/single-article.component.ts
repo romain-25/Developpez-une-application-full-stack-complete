@@ -36,7 +36,7 @@ export class SingleArticleComponent {
   }
   sendComment(){
     let comment: CommentDto= {content: this.newComment}
-    this.articleService.addComment(this.article.id, 1, comment).subscribe((result: ArticleModel) => {
+    this.articleService.addComment(this.article.id, comment).subscribe((result: ArticleModel) => {
       this.article = result;
     })
   }

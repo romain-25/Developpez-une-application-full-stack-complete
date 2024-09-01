@@ -8,6 +8,7 @@ import {TokenModel} from "../models/TokenModel";
 })
 export class SessionService {
   router:Router = inject(Router)
+  private tokenKey = 'tokenModel';
 
   public isLogged: boolean = false;
   // public user: User | undefined;
@@ -17,9 +18,31 @@ export class SessionService {
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
   }
-
+  setSession(tokenModel: TokenModel): void {
+    localStorage.setItem(this.tokenKey, JSON.stringify(tokenModel));
+  }
+  getSession(): TokenModel | null {
+    const tokenJson = localStorage.getItem(this.tokenKey);
+    if (tokenJson) {
+      return JSON.parse(tokenJson);
+    }
+    return null;
+  }
+  isAuthenticated(): boolean {
+    if(this.getSession() != null){
+      return true
+    }else{
+      return false;
+    }
+  }
+  initSession() {
+    const tokenJson = localStorage.getItem('tokenModel');
+    if (tokenJson) {
+      const tokenModel = JSON.parse(tokenJson);
+      this.setSession(tokenModel);
+    }
+  }
   public logIn(token: TokenModel): void {
-    // this.user = user;
     if(token){
       localStorage.setItem('tokenModel', JSON.stringify(token));
       this.isLogged = true;

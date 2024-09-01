@@ -41,7 +41,7 @@ export class CardThemeComponent {
       tokenModel = JSON.parse(tokenJson);
     }
     if (this.theme.subscribed) {
-      this.articleService.unsubscribeFromTheme(tokenModel.id, this.theme.id).subscribe(
+      this.articleService.unsubscribeFromTheme(this.theme.id).subscribe(
         (data: ThemeModelDto) => {
           if(data.id == this.theme.id){
             this.theme = data;
@@ -54,7 +54,7 @@ export class CardThemeComponent {
         error => console.error('Erreur lors de la désinscription', error)
       );
     } else {
-      this.articleService.subscribeToTheme(tokenModel.id, this.theme.id).subscribe(
+      this.articleService.subscribeToTheme(this.theme.id).subscribe(
           (data: ThemeModelDto) => {
             if(data.id == this.theme.id){
               this.theme = data;

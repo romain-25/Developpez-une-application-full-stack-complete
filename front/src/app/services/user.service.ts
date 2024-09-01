@@ -19,16 +19,13 @@ export class UserService {
   register(userRegister:UserRegisterModel):Observable<any>{
     return this.http.post<UserRegisterModel>(environment.developpement + this.prefix + 'register',userRegister);
   }
-  profil(email: string):Observable<any>{
-      let userEmail: UserEmailModel = {username: "",email: email}
-      return this.http.post(environment.developpement + this.prefix +'profil', userEmail);
+  profil():Observable<any>{
+      return this.http.get(environment.developpement + this.prefix +'profil');
   }
   editProfil(email:UserEmailModel):Observable<any>{
     return this.http.put<UserEmailModel>(environment.developpement + this.prefix + 'profil', email);
   }
   getUserThemes(): Observable<any> {
-    //TODO change for id localstorage
-    const userId = 1;
-    return this.http.get(`${environment.developpement + this.prefix}${userId}/themes`);
+    return this.http.get(`${environment.developpement + this.prefix}themes`);
   }
 }

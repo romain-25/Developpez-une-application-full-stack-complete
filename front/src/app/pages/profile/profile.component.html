@@ -28,7 +28,7 @@
 <div class="w-90">
   <div class="container">
     @for(theme of user.themes; track theme.id){
-      <app-card-theme [profile]="true" (change)="getProfile('romain@gmail.com')" [theme]="theme" [themeUser]="user.themes"></app-card-theme>
+      <app-card-theme [profile]="true" (change)="getProfile()" [theme]="theme" [themeUser]="user.themes"></app-card-theme>
     }
   </div>
 </div>

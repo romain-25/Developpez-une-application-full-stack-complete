@@ -32,20 +32,11 @@ export class ProfileComponent {
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
   });
-  ngOnInit(): void{
-    let tokenJson: string | null = localStorage.getItem('tokenModel')
-    let tokenModel: TokenModel = {} as TokenModel;
-    if(tokenJson){
-      tokenModel = JSON.parse(tokenJson);
-    }
-    // TODO change email with recovery token in backend
-    this.email = tokenModel.email
-    if(this.email != null){
-        this.getProfile(this.email);
-    }
+  ngOnInit(): void {
+    this.getProfile()
   }
-  getProfile(email: string){
-    this.userService.profil(email).subscribe( (result: UserModel): void=>{
+  getProfile(){
+    this.userService.profil().subscribe( (result: UserModel): void=>{
       console.log(result)
       if(result){
         this.user = result;
@@ -56,11 +47,6 @@ export class ProfileComponent {
           }
         )
       }
-    })
-  }
-  onThemeChanged(){
-    this.userService.getUserThemes().subscribe((result: ThemeModelDto[]) =>{
-      this.user.themes = result
     })
   }
   save(): void{
