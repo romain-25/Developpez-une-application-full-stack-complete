@@ -10,5 +10,8 @@ export class AppComponent {
   private sessionService: SessionService = inject(SessionService);
   ngOnInit(){
     this.sessionService.initSession();
+    if (!this.sessionService.isAuthenticated()) {
+      this.sessionService.router.navigate(['/login']);
+    }
   }
 }

@@ -36,10 +36,15 @@ export class SessionService {
     }
   }
   initSession() {
-    const tokenJson = localStorage.getItem('tokenModel');
+    const tokenJson = localStorage.getItem(this.tokenKey);
     if (tokenJson) {
       const tokenModel = JSON.parse(tokenJson);
       this.setSession(tokenModel);
+      this.isLogged = true;
+      this.next();
+    } else {
+      this.isLogged = false;
+      this.next();
     }
   }
   public logIn(token: TokenModel): void {
