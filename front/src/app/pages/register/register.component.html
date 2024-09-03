@@ -1,5 +1,5 @@
 <div class="parent-register">
-  <app-back></app-back>
+  <app-back [path]="'/'"></app-back>
   <div class="center">
     <h1>Inscription</h1>
     <form class="register-form" [formGroup]="form" (ngSubmit)="register()">

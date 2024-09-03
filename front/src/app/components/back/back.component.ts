@@ -1,5 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {Location} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-back',
@@ -10,7 +11,9 @@ import {Location} from "@angular/common";
 })
 export class BackComponent {
   location: Location = inject(Location);
+  router:Router = inject(Router);
+  @Input() path!: string;
   back(): void{
-    this.location.back();
+    (this.path) ? this.router.navigate([this.path]) : this.location.back();
   }
 }

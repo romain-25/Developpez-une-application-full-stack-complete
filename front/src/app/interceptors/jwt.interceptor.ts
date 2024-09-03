@@ -6,13 +6,27 @@ import {TokenModel} from "../models/TokenModel";
 export class JwtInterceptor implements HttpInterceptor {
   constructor() {}
 
+  private readonly whitelistUrls = [
+    '/login',
+    '/register'
+  ];
+
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    let tokenJson: string | null = localStorage.getItem('tokenModel')
+    const isWhitelisted = this.whitelistUrls.some(url => request.url.includes(url));
+
+    if (isWhitelisted) {
+      return next.handle(request);
+    }
+
+    let tokenJson: string | null = localStorage.getItem('tokenModel');
     let tokenModel: TokenModel = {} as TokenModel;
-    if(tokenJson){
+
+    if (tokenJson) {
       tokenModel = JSON.parse(tokenJson);
     }
+
     const token = tokenModel.token;
+
     if (token) {
       request = request.clone({
         setHeaders: {
