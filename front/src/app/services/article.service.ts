@@ -13,8 +13,8 @@ export class ArticleService {
   prefix: string = "/article/";
   private http: HttpClient = inject(HttpClient);
 
-  getAllArticles():Observable<any>{
-    return this.http.get<ArticleModel[]>(environment.developpement + this.prefix + "all")
+  getAllArticles(reverse:boolean):Observable<any>{
+    return this.http.get<ArticleModel[]>(environment.developpement + this.prefix + `all?reverse=${reverse}`)
   }
   createArticle(article:ArticleModel):Observable<any>{
     return this.http.post<ArticleModel>(environment.developpement + this.prefix + 'create',article);

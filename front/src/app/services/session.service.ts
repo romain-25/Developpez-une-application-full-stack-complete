@@ -11,7 +11,6 @@ export class SessionService {
   private tokenKey = 'tokenModel';
 
   public isLogged: boolean = false;
-  // public user: User | undefined;
 
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 

@@ -19,9 +19,17 @@ import {RouterLink} from "@angular/router";
 })
 export class ArticlesComponent {
   private articleService: ArticleService = inject(ArticleService);
+  reverseOrder: boolean = false;
   articles:ArticleModel[] = []
   ngOnInit(){
-    this.articleService.getAllArticles().subscribe(((result: ArticleModel[]) =>{
+   this.loadArticles()
+  }
+  toggleSortOrder() {
+    this.reverseOrder = !this.reverseOrder;
+    this.loadArticles();
+  }
+  loadArticles(){
+    this.articleService.getAllArticles(this.reverseOrder).subscribe(((result: ArticleModel[]) =>{
       this.articles = result;
       console.log("articles", this.articles)
     }))
