@@ -29,11 +29,18 @@ export class CardThemeComponent {
   ngOnInit(): void {
       this.updateSubscribeString();
   }
-
+  /**
+   * Updates the subscription button text based on the user's subscription status.
+   * If the user is subscribed, the text will be 'Se désinscrire', otherwise 'S'inscrire'.
+   */
   updateSubscribeString(): void {
       this.subscribeString = this.theme.subscribed ? 'Se désinscrire' : 'S\'inscrire';
   }
-
+  /**
+   * Subscribes or unsubscribes the user from a theme based on their current subscription status.
+   * The user's token is retrieved from local storage, and the appropriate subscription/unsubscription service is called.
+   * Updates the theme and subscription string on successful response, and handles any errors by logging them.
+   */
   subscribeTheme(): void {
     let tokenJson: string | null = localStorage.getItem('tokenModel')
     let tokenModel: TokenModel = {} as TokenModel;

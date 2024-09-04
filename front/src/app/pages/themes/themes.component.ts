@@ -24,7 +24,6 @@ import {UserService} from "../../services/user.service";
 export class ThemesComponent {
   articleService: ArticleService= inject(ArticleService);
   userService: UserService= inject(UserService);
-  cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   themes: ThemeModelDto[] = [];
   themesUser: ThemeModelDto[] = [];
 
@@ -32,17 +31,22 @@ export class ThemesComponent {
     this.loadThemes();
     this.loadUserThemes();
   }
-
+  /**
+   * Loads all available themes from the article service and assigns them to the local 'themes' variable.
+   * Logs an error message to the console if the operation fails.
+   */
   loadThemes(): void {
     this.articleService.getThemes().subscribe(
       data => {
         this.themes = data;
-        console.log("this.themes", this.themes);
       },
       error => console.error('Erreur lors du chargement des thèmes', error)
     );
   }
-
+  /**
+   * Loads the themes associated with the authenticated user from the user service and assigns them to the local 'themesUser' variable.
+   * Logs an error message to the console if the operation fails.
+   */
   loadUserThemes(): void {
     this.userService.getUserThemes().subscribe(
       data => {

@@ -1,6 +1,7 @@
-package com.openclassrooms.microserviceuser.repository;
+package com.openclassrooms.mddapi.repository;
 
-import com.openclassrooms.microserviceuser.model.UserModel;
+
+import com.openclassrooms.mddapi.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

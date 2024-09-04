@@ -24,14 +24,21 @@ export class ArticlesComponent {
   ngOnInit(){
    this.loadArticles()
   }
+  /**
+   * Toggles the sort order for articles between normal and reverse chronological order.
+   * After toggling, it reloads the articles using the updated sort order.
+   */
   toggleSortOrder() {
     this.reverseOrder = !this.reverseOrder;
     this.loadArticles();
   }
+  /**
+   * Loads the list of articles from the server, sorted according to the current sort order (normal or reverse).
+   * The loaded articles are assigned to the local `articles` variable, and the list is logged to the console.
+   */
   loadArticles(){
     this.articleService.getAllArticles(this.reverseOrder).subscribe(((result: ArticleModel[]) =>{
       this.articles = result;
-      console.log("articles", this.articles)
     }))
   }
 }

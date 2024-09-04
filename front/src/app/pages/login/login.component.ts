@@ -30,13 +30,15 @@ export class LoginComponent {
     email: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.min(3)]]
   });
-
+  /**
+   * Handles the user login process by sending the login form data to the server.
+   * On successful login, the server's token model is logged and the session is initiated.
+   * If there is an error during the login process, the error is logged to the console.
+   */
   connexion(): void{
     const userLogin: UserLoginModel = this.form.value as UserLoginModel;
     this.userService.login(userLogin).subscribe((result:TokenModel): void =>{
-      console.log(result)
       this.sessionService.logIn(result)
-      // TODO do catch
     }, error => console.log(error));
   }
 }

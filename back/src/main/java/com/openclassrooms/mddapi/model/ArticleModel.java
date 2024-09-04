@@ -1,11 +1,11 @@
-package com.openclassrooms.microservicearticle.model;
+package com.openclassrooms.mddapi.model;
 
-import com.openclassrooms.microservicearticle.dto.AuthorDto;
-import com.openclassrooms.microservicearticle.dto.ThemeDto;
+import com.openclassrooms.mddapi.dto.AuthorDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,18 +17,24 @@ import java.util.Date;
 public class ArticleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
-    @Column
+
     private String title;
-    @Column
+
+    @Column(columnDefinition = "TEXT")
     private String content;
-    @Column(name= "Published_Date")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id", nullable = false)
+    private UserModel author;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "theme_id", nullable = false)
+    private ThemeModel theme;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date publishedDate;
-    @ManyToOne
-    @JoinColumn(name= "Author_ID", referencedColumnName = "id", insertable = false, updatable = false)
-    private AuthorDto author;
-    @ManyToOne
-    @JoinColumn(name= "Theme_ID", referencedColumnName = "id", insertable = false, updatable = false)
-    private ThemeDto theme;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentModel> comments;
 }

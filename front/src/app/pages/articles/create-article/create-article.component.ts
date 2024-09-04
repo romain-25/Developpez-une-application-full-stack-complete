@@ -35,7 +35,6 @@ export class CreateArticleComponent {
   public form: FormGroup = this.fb.group({
     title: ['', [Validators.required]],
     content: ['', [Validators.required]],
-    // authorID: '',
     authorId: '',
     themeId: '',
   });
@@ -66,31 +65,42 @@ export class CreateArticleComponent {
           });
         }
       });
-      console.log(this.options)
     })
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);
     }
-    console.log("tokenModel.username", tokenModel);
     this.form.patchValue({
       authorUsername: tokenModel.username,
       authorId: tokenModel.id,
     });
   }
-
+  /**
+   * Displays the name of the theme in the form input.
+   * If the theme is valid and has a name, the theme's name is returned, otherwise an empty string is returned.
+   *
+   * @param theme The theme model containing the name to be displayed.
+   * @return The name of the theme if available, otherwise an empty string.
+   */
   displayFn(theme: ThemeModelDto): string {
     return theme && theme.name ? theme.name : '';
   }
-
+  /**
+   * Filters the list of available themes based on the provided title.
+   * The filtering is case-insensitive and matches themes whose names include the filter value.
+   *
+   * @param title The title to filter the themes by.
+   * @return A filtered list of themes whose names contain the filter value.
+   */
   private _filter(title: string): ThemeModelDto[] {
     const filterValue = title.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
   }
-
+  /**
+   * Creates a new article using the form data and sends it to the server.
+   * The form values are logged to the console, and on successful creation, the result from the server is also logged.
+   */
   create() {
-    console.log('form.value', this.form.value)
     this.articleService.createArticle(this.form.value).subscribe((result: any) => {
-      console.log(result);
     });
   }
 }

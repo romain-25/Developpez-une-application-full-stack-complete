@@ -1,4 +1,4 @@
-package com.openclassrooms.microserviceuser.dto;
+package com.openclassrooms.mddapi.dto;
 
 import lombok.Getter;
 import lombok.Setter;
