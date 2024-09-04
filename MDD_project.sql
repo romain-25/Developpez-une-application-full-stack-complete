@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 -- Insert the user with id 1
 INSERT INTO users (id, username, email, password) VALUES
-(1, 'romain', 'romain@mdd.fr', 'Pass@1234');
+(1, 'romain', 'romain@mdd.fr', '$2b$12$dJwZlfkrOJXaAWRXPNXMP.n2GcdZY9KgEJT.TIbu7RoYq/ciahG4q');
 
 -- Insert themes
 INSERT INTO themes (name, content) VALUES
