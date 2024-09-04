@@ -39,7 +39,6 @@ export class ArticlesComponent {
   loadArticles(){
     this.articleService.getAllArticles(this.reverseOrder).subscribe(((result: ArticleModel[]) =>{
       this.articles = result;
-      console.log("articles", this.articles)
     }))
   }
 }

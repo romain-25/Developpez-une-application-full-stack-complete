@@ -31,7 +31,6 @@ export class SingleArticleComponent {
     this.articleId = Number(this.activatedRoute.snapshot.paramMap.get('id')!);
     this.articleService.getSingleArticle(this.articleId).subscribe((result: ArticleModel) => {
       this.article = result
-      console.log("Comment", this.article.comments)
     })
   }
   /**

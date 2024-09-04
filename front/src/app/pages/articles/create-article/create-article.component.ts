@@ -65,7 +65,6 @@ export class CreateArticleComponent {
           });
         }
       });
-      console.log(this.options)
     })
     if(tokenJson){
       tokenModel = JSON.parse(tokenJson);
@@ -102,7 +101,6 @@ export class CreateArticleComponent {
    */
   create() {
     this.articleService.createArticle(this.form.value).subscribe((result: any) => {
-      console.log(result);
     });
   }
 }
