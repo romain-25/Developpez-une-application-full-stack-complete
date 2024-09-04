@@ -17,9 +17,19 @@ export class SessionService {
   public $isLogged(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
   }
+  /**
+   * Stores the provided token model in local storage to maintain the session.
+   *
+   * @param tokenModel The model containing the token information to be saved.
+   */
   setSession(tokenModel: TokenModel): void {
     localStorage.setItem(this.tokenKey, JSON.stringify(tokenModel));
   }
+  /**
+   * Retrieves the token model from local storage.
+   *
+   * @return The token model if present, or null if not found.
+   */
   getSession(): TokenModel | null {
     const tokenJson = localStorage.getItem(this.tokenKey);
     if (tokenJson) {
@@ -27,6 +37,11 @@ export class SessionService {
     }
     return null;
   }
+  /**
+   * Checks if the user is authenticated by verifying if a session exists.
+   *
+   * @return true if the user is authenticated, false otherwise.
+   */
   isAuthenticated(): boolean {
     if(this.getSession() != null){
       return true
@@ -34,6 +49,10 @@ export class SessionService {
       return false;
     }
   }
+  /**
+   * Initializes the user session by checking for an existing token in local storage.
+   * If a token exists, it restores the session and sets the authentication status.
+   */
   initSession() {
     const tokenJson = localStorage.getItem(this.tokenKey);
     if (tokenJson) {
@@ -46,6 +65,11 @@ export class SessionService {
       this.next();
     }
   }
+  /**
+   * Logs in the user by storing the token in local storage and navigating to the articles page.
+   *
+   * @param token The token model containing authentication information.
+   */
   public logIn(token: TokenModel): void {
     if(token){
       localStorage.setItem('tokenModel', JSON.stringify(token));
@@ -54,7 +78,9 @@ export class SessionService {
       this.next();
     }
   }
-
+  /**
+   * Logs out the user by removing the token from local storage and navigating to the login page.
+   */
   public logOut(): void {
     localStorage.removeItem('tokenModel');
     // this.user = undefined;
@@ -62,7 +88,9 @@ export class SessionService {
     this.router.navigate(['/login'])
     this.next();
   }
-
+  /**
+   * Updates the subject tracking the user's logged-in status.
+   */
   private next(): void {
     this.isLoggedSubject.next(this.isLogged);
   }

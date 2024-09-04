@@ -35,6 +35,10 @@ export class ProfileComponent {
   ngOnInit(): void {
     this.getProfile()
   }
+  /**
+   * Retrieves the profile of the authenticated user from the server and updates the form with the user's data.
+   * The profile data is logged to the console, and if valid, sets the form's username and email fields.
+   */
   getProfile(){
     this.userService.profil().subscribe( (result: UserModel): void=>{
       console.log(result)
@@ -49,6 +53,10 @@ export class ProfileComponent {
       }
     })
   }
+  /**
+   * Sends the updated profile data from the form to the server to save changes.
+   * Logs the server's response (MessageModel) to the console.
+   */
   save(): void{
     this.userService.editProfil(this.form.value).subscribe( (result:MessageModel): void=>{
       console.log(result)

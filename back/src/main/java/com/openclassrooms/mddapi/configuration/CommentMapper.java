@@ -17,9 +17,12 @@ public class CommentMapper {
         CommentDto dto = new CommentDto();
         dto.setId(comment.getId());
         dto.setContent(comment.getContent());
-        dto.setPublishedDate(comment.getPublishedDate());
-        
-        UserProfilDto authorDto = new UserProfilDto(comment.getAuthor().getUsername(), comment.getAuthor().getEmail());
+        dto.setPublishedDate(comment.getCreatedAt());
+
+        UserProfilDto authorDto = new UserProfilDto(
+                comment.getAuthor().getUsername(),
+                comment.getAuthor().getEmail()
+        );
         dto.setAuthor(authorDto);
 
         return dto;
@@ -32,7 +35,7 @@ public class CommentMapper {
 
         CommentModel comment = new CommentModel();
         comment.setContent(dto.getContent());
-        comment.setPublishedDate(new Date());
+        comment.setCreatedAt(new Date());
         comment.setArticle(article);
         comment.setAuthor(user);
 

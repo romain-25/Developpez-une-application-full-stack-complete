@@ -15,8 +15,4 @@ import {MatCard} from "@angular/material/card";
 })
 export class CardArticleComponent {
   @Input() article!: ArticleModel;
-  cd: ChangeDetectorRef = inject(ChangeDetectorRef);
-  constructor() {
-    console.log("article", this.article);
-  }
 }

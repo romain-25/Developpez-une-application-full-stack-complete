@@ -34,6 +34,11 @@ export class SingleArticleComponent {
       console.log("Comment", this.article.comments)
     })
   }
+  /**
+   * Sends a new comment for the current article to the server.
+   * The comment content is taken from the `newComment` variable and sent as a `CommentDto`.
+   * Upon successful submission, the article is updated with the latest data (including the new comment).
+   */
   sendComment(){
     let comment: CommentDto= {content: this.newComment}
     this.articleService.addComment(this.article.id, comment).subscribe((result: ArticleModel) => {

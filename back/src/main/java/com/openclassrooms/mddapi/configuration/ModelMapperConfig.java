@@ -1,7 +1,7 @@
-package com.openclassrooms.microservicearticle.configuration;
+package com.openclassrooms.mddapi.configuration;
 
-import com.openclassrooms.microservicearticle.dto.ArticleCreateDto;
-import com.openclassrooms.microservicearticle.model.ArticleModel;
+import com.openclassrooms.mddapi.dto.ArticleCreateDto;
+import com.openclassrooms.mddapi.model.ArticleModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;

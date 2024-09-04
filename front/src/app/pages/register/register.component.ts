@@ -23,13 +23,23 @@ export class RegisterComponent {
   userService:UserService = inject(UserService);
   router:Router = inject(Router);
   sessionService:SessionService = inject(SessionService);
-
+  /**
+   * FormGroup representing the registration form with fields for username, email, and password.
+   * Includes validation:
+   * - username: required
+   * - email: required and must be a valid email format
+   * - password: required, must be at least 8 characters long, and contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+   */
   public form: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$')]],
   });
-
+  /**
+   * Handles the registration process by validating the form and submitting the data if valid.
+   * If the form is invalid, it marks all fields as touched to show validation errors.
+   * On successful registration, logs in the user with the received session data.
+   */
   register(): void{
     if (this.form.invalid) {
       this.form.markAllAsTouched();

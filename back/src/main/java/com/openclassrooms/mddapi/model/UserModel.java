@@ -1,7 +1,9 @@
-package com.openclassrooms.microserviceuser.model;
+package com.openclassrooms.mddapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,4 +23,11 @@ public class UserModel {
     private String email;
     @Column
     private String password;
+    @ManyToMany
+    @JoinTable(
+            name = "UserThemeSubscription",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "theme_id")
+    )
+    private Set<ThemeModel> themes;
 }

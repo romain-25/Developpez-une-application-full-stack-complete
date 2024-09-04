@@ -1,4 +1,4 @@
-package com.openclassrooms.microserviceuser.dto;
+package com.openclassrooms.mddapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

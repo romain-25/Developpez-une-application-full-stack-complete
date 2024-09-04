@@ -1,4 +1,4 @@
-package com.openclassrooms.microserviceuser.service;
+package com.openclassrooms.mddapi.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -44,36 +44,26 @@ public class JwtService {
         return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
     }
     /**
-     * Validates the given JWT token.
+     /**
+     * Validates a JWT bearer token, ensuring it is well-formed and not expired.
+     * If the token is valid, it returns the subject ("sub") claim from the token.
+     * If the token is invalid or expired, it throws an appropriate exception.
      *
-     * @param bearerToken the bearer token to validate
-     * @throws ResponseStatusException if the token is invalid or not properly formatted
+     * @param bearerToken The bearer token to validate, expected to start with "Bearer ".
+     * @return The subject claim ("sub") from the token if valid.
+     * @throws ResponseStatusException If the token is invalid or expired.
      */
-    public void validateToken(String bearerToken) {
+    public String validateToken(String bearerToken) {
         try {
             if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
                 String token = bearerToken.substring(7);
                 Jwt jwt = jwtDecoder.decode(token);
-            } else {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token invalide");
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token invalide");
-        }
-    }
-    /**
-     * Extracts the subject (usually the user identifier) from the given JWT token.
-     *
-     * @param bearerToken the bearer token from which to extract the subject
-     * @return the subject as a String
-     * @throws ResponseStatusException if the token is invalid or not properly formatted
-     */
-    public String getSubjectFromToken(String bearerToken) {
-        try {
-            if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-                String token = bearerToken.substring(7);
-                Jwt jwt = jwtDecoder.decode(token);
-                return (String) jwt.getClaims().get("sub");
+                Instant expiration = jwt.getExpiresAt();
+
+                if (expiration != null && expiration.isBefore(Instant.now())) {
+                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token expired");
+                }
+                return (String)jwt.getClaims().get("sub");
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token invalide");
             }
