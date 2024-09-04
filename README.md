@@ -17,7 +17,7 @@ Configure environment variables for Maven to use the `mvn` command.
 ## Database Configuration
 
 1. Using MySQL Workbench, create a new schema named **MDD**. Set it as the default schema.
-2. Run the SQL script that you can find at the root of the repository: [script.sql](https://github.com/romain-25/Developpez-une-application-full-stack-complete.git).
+2. Run the SQL script that you can find at the root of the repository: [script.sql](https://github.com/romain-25/Developpez-une-application-full-stack-complete/blob/final/MDD_project.sql).
 
 The script will create the following:
 - A user with the credentials:
