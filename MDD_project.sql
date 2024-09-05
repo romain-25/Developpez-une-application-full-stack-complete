@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS articles (
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     theme_id INT,
-    FOREIGN KEY (theme_id) REFERENCES themes(id) ON DELETE CASCADE
 );
 
 -- Create table for Subscriptions (many-to-many relationship between users and themes)
@@ -28,8 +27,6 @@ CREATE TABLE IF NOT EXISTS subscriptions (
     user_id INT,
     theme_id INT,
     PRIMARY KEY (user_id, theme_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (theme_id) REFERENCES themes(id) ON DELETE CASCADE
 );
 
 -- Insert the user with id 1
