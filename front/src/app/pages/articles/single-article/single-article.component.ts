@@ -42,6 +42,7 @@ export class SingleArticleComponent {
     let comment: CommentDto= {content: this.newComment}
     this.articleService.addComment(this.article.id, comment).subscribe((result: ArticleModel) => {
       this.article = result;
+      this.newComment = "";
     })
   }
 }
